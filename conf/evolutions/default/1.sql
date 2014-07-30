@@ -6,13 +6,15 @@
 create table comment (
   id                        bigint not null,
   post_id                   bigint not null,
-  coment                    varchar(255) not null,
+  comment                   varchar(255) not null,
+  num                       integer not null,
   constraint pk_comment primary key (id))
 ;
 
 create table post (
   id                        bigint not null,
   msg                       varchar(255) not null,
+  next_num_comment          integer,
   constraint pk_post primary key (id))
 ;
 

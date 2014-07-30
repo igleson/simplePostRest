@@ -29,11 +29,14 @@ public class Post extends Model {
 	@NotNull
 	private String msg;
 
+	private int nextNumComment;
+
 	public static final Finder<Long, Post> find = new Finder<Long, Post>(
 			Long.class, Post.class);
 
 	public Post(String msg) {
 		this.msg = msg;
+		this.nextNumComment = 1;
 	}
 
 	public String getMsg() {
@@ -62,5 +65,7 @@ public class Post extends Model {
 
 	public void addComment(Comment comment) {
 		this.comments.add(comment);
+		comment.setNum(nextNumComment);
+		nextNumComment++;
 	}
 }

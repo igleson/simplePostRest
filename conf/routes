@@ -3,14 +3,21 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
+GET     /                           			controllers.Application.index()
 
 #Posts
-GET		/post						controllers.Application.allPosts
-POST	/post						controllers.Application.createPost
+GET		/post									controllers.Application.allPosts
+POST	/post									controllers.Application.createPost
+GET		/post/:id								controllers.Application.getPost(id: Long)
+PUT		/post/:id								controllers.Application.editPost(id: Long)
+DELETE	/post/:id								controllers.Application.deletePost(id: Long)
 
 #Coments
-GET /comment/:id					controllers.Application.coments(id: Long)
+GET		/post/:idPost/comment					controllers.Application.comments(idPost: Long)
+POST	/post/:idPost/comment					controllers.Application.addComent(idPost: Long)
+GET		/post/:idPost/comment/:idComment		controllers.Application.getComment(idPost: Long, idComment: Long)
+PUT		/post/:idPost/comment/:idComment		controllers.Application.editComment(idPost: Long, idComment: Long)
+DELETE	/post/:idPost/comment/:idComment		controllers.Application.deleteComment(idPost: Long, idComment: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

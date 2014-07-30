@@ -9,6 +9,11 @@ import play.db.ebean.Model;
 @Entity
 public class Comment extends Model {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static final Finder<Long, Comment> find = new Finder<Long, Comment>(
 			Long.class, Comment.class);
 
@@ -16,17 +21,36 @@ public class Comment extends Model {
 	private long id;
 
 	@NotNull
-	private String coment;
+	private String comment;
+
+	@NotNull
+	private int num;
 
 	public Comment(String msg) {
-		this.coment = msg;
+		this.comment = msg;
 	}
 
-	public long getId() {
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	private long getId() {
 		return id;
 	}
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
 	}
 }
