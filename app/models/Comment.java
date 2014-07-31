@@ -26,6 +26,9 @@ public class Comment extends Model {
 	@NotNull
 	private int num;
 
+	public Comment() {
+	}
+
 	public Comment(String msg) {
 		this.comment = msg;
 	}

@@ -34,6 +34,9 @@ public class Post extends Model {
 	public static final Finder<Long, Post> find = new Finder<Long, Post>(
 			Long.class, Post.class);
 
+	public Post() {
+	}
+
 	public Post(String msg) {
 		this.msg = msg;
 		this.nextNumComment = 1;
