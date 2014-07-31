@@ -1,5 +1,5 @@
 {
 	"deploy": {
-		"goal": "-Dconfig.resource=application-cc.conf"
+		"goal": "-Dconfig.resource=application-clevercloud.conf"
 	}
 }
