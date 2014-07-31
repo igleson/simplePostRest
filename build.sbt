@@ -3,7 +3,7 @@ name := "simplePost"
 version := "1.0-SNAPSHOT"
 
 libraryDependencies ++= Seq(
-  "mysql" % "mysql-connector-java" % "5.1.18",
+  "postgresql" % "postgresql" % "9.1-901.jdbc4"
   javaJdbc,
   javaEbean,
   cache
