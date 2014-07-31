@@ -18,10 +18,12 @@ public class SimplePost {
 		return getPost(idPost).getComents();
 	}
 
-	public static void coment(long idPost, String comment) {
+	public static Comment coment(long idPost, String comment) {
 		Post post = getPost(idPost);
-		post.addComment(new Comment(comment));
+		Comment comm = new Comment(comment);
+		post.addComment(comm);
 		post.save();
+		return comm;
 	}
 
 	public static Post getPost(long id) {

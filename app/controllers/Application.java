@@ -1,20 +1,19 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import models.Comment;
+import models.Post;
 import models.ResourceNotFoundException;
 import models.SimplePost;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
-import views.html.defaultpages.error;
 
 public class Application extends Controller {
-
-	public static Result index() {
-		return ok(index.render("Your new application is ready."));
-	}
 
 	public static Result allPosts() {
 		return ok(Json.toJson(SimplePost.allPost()));
@@ -31,14 +30,15 @@ public class Application extends Controller {
 	public static Result createPost() {
 		Map<String, String[]> params = Controller.request().body()
 				.asFormUrlEncoded();
-
+		List<Post> createds = new ArrayList<Post>();
+		
 		String[] msgs = params.get("msg");
 		if (msgs != null) {
 			for (String msg : msgs) {
-				SimplePost.createPost(msg);
+				createds.add(SimplePost.createPost(msg));
 			}
 		}
-		return ok();
+		return ok(Json.toJson(createds));
 	}
 
 	public static Result editPost(long id) {
@@ -84,10 +84,11 @@ public class Application extends Controller {
 				.asFormUrlEncoded();
 
 		String[] comms = params.get("comment");
+		List<Comment> createds = new ArrayList<Comment>();
 		if (comms != null) {
 			try {
 				for (String msg : comms) {
-					SimplePost.coment(id, msg);
+					createds.add(SimplePost.coment(id, msg));
 				}
 			} catch (ResourceNotFoundException e) {
 				return notFound(e.getMessage());
@@ -118,5 +119,9 @@ public class Application extends Controller {
 			return notFound(e.getMessage());
 		}
 		return ok();
+	}
+
+	public static Result actionNotFount(String uri) {
+		return notFound("There is no resource to " + uri);
 	}
 }

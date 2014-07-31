@@ -2,19 +2,20 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-GET     /                           			controllers.Application.index()
-
-#Posts
+#Posts collection
 GET		/post									controllers.Application.allPosts
 POST	/post									controllers.Application.createPost
+
+#Post
 GET		/post/:id								controllers.Application.getPost(id: Long)
 PUT		/post/:id								controllers.Application.editPost(id: Long)
 DELETE	/post/:id								controllers.Application.deletePost(id: Long)
 
-#Coments
+#Coments collection
 GET		/post/:idPost/comment					controllers.Application.comments(idPost: Long)
 POST	/post/:idPost/comment					controllers.Application.addComent(idPost: Long)
+
+#Comment
 GET		/post/:idPost/comment/:idComment		controllers.Application.getComment(idPost: Long, idComment: Long)
 PUT		/post/:idPost/comment/:idComment		controllers.Application.editComment(idPost: Long, idComment: Long)
 DELETE	/post/:idPost/comment/:idComment		controllers.Application.deleteComment(idPost: Long, idComment: Long)
