@@ -1,0 +1,5 @@
+{
+    "deploy": {
+        "goal" : "run -Dconfig.resource=clevercloud.conf"
+    }
+}
