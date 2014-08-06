@@ -2,12 +2,15 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
 
 import play.db.ebean.Model;
@@ -28,6 +31,8 @@ public class Post extends Model {
 
 	@NotNull
 	private String msg;
+
+	private Date lastModification;
 
 	private int nextNumComment;
 
@@ -62,6 +67,10 @@ public class Post extends Model {
 		return Collections.unmodifiableList(this.comments);
 	}
 
+	public void preUpdate() {
+		lastModification = new Date();
+	}
+
 	private void setComments(List<Comment> coments) {
 		this.comments = coments;
 	}
@@ -70,5 +79,19 @@ public class Post extends Model {
 		this.comments.add(comment);
 		comment.setNum(nextNumComment);
 		nextNumComment++;
+	}
+
+	@Override
+	public void save() {
+		preUpdate();
+		super.save();
+	}
+
+	public Date getLastModification() {
+		return lastModification;
+	}
+
+	public void setLastModification(Date lastModification) {
+		this.lastModification = lastModification;
 	}
 }

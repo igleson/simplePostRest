@@ -21,6 +21,7 @@ public class SimplePost {
 	public static Comment coment(long idPost, String comment) {
 		Post post = getPost(idPost);
 		Comment comm = new Comment(comment);
+		comm.preUpdate();
 		post.addComment(comm);
 		post.save();
 		return comm;
@@ -51,7 +52,9 @@ public class SimplePost {
 	}
 
 	public static void editComment(long idPost, long idComment, String newComm) {
-		getComment(idPost, idComment).setComment(newComm);
+		Comment comm = getComment(idPost, idComment);
+		comm.preUpdate();
+		comm.setComment(newComm);
 	}
 
 	public static void deletePost(long id) {

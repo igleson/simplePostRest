@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
@@ -25,6 +27,8 @@ public class Comment extends Model {
 
 	@NotNull
 	private int num;
+
+	private Date lastModification;
 
 	public Comment() {
 	}
@@ -55,5 +59,23 @@ public class Comment extends Model {
 
 	public void setNum(int num) {
 		this.num = num;
+	}
+
+	public Date getLastModification() {
+		return lastModification;
+	}
+
+	public void setLastModification(Date lastModification) {
+		this.lastModification = lastModification;
+	}
+
+	public void preUpdate() {
+		lastModification = new Date();
+	}
+
+	@Override
+	public void save() {
+		preUpdate();
+		super.save();
 	}
 }

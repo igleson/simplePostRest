@@ -1,6 +1,8 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +16,24 @@ import play.mvc.Result;
 import views.html.index;
 
 public class Application extends Controller {
+
+	public static Result index() {
+		return ok("HOW TO:\n"
+				+ "GET		/post								return all posts\n"
+				+ "POST		/post								add a new post, use param msg to set the message from the post\n"
+				+ "HEAD		/post								sumarize data about all the posts\n\n"
+				+ "GET		/post/:id							return a specific post\n"
+				+ "PUT		/post/:id							set a specific post, use msg to set the message from the post\n"
+				+ "DELETE		/post/:id							delete a specefic post\n"
+				+ "HEAD		/post/:id							sumarize the data about a post\n\n"
+				+ "GET		/post/:idPost/comment				get all the comments from a specif post\n"
+				+ "POST		/post/:idPost/comment				add a new comment to a post, use param comment to set the content of the comment\n"
+				+ "HEAD		/post/:idPost/comment				sumazire data about all comment from a post\n\n"
+				+ "GET		/post/:idPost/comment/:idComment	get a specific comment from a specific post\n"
+				+ "PUT		/post/:idPost/comment/:idComment	set a specific comment from a post, use param comment to set the content\n"
+				+ "DELETE		/post/:idPost/comment/:idComment	delete a comment from a post\n"
+				+ "HEAD		/post/:idPost/comment/:idComment	sumarize the data about a comment from a post\n");
+	}
 
 	public static Result allPosts() {
 		return ok(Json.toJson(SimplePost.allPost()));
@@ -31,7 +51,7 @@ public class Application extends Controller {
 		Map<String, String[]> params = Controller.request().body()
 				.asFormUrlEncoded();
 		List<Post> createds = new ArrayList<Post>();
-		
+
 		String[] msgs = params.get("msg");
 		if (msgs != null) {
 			for (String msg : msgs) {
@@ -98,7 +118,6 @@ public class Application extends Controller {
 	}
 
 	public static Result editComment(long idPost, long idComment) {
-		System.out.println("EDIT COMMENT");
 		Map<String, String[]> params = Controller.request().body()
 				.asFormUrlEncoded();
 
@@ -112,7 +131,6 @@ public class Application extends Controller {
 	}
 
 	public static Result deleteComment(long idPost, long idComment) {
-		System.out.println("DELETE COMMENT " + idPost + " " + idComment);
 		try {
 			SimplePost.deleteComment(idPost, idComment);
 		} catch (ResourceNotFoundException e) {
@@ -123,5 +141,70 @@ public class Application extends Controller {
 
 	public static Result actionNotFount(String uri) {
 		return notFound("There is no resource to " + uri);
+	}
+
+	public static Result headPosts() {
+		Map<String, String> head = new HashMap<String, String>();
+
+		Collection<Post> posts = SimplePost.allPost();
+		String mod = "";
+		if (posts.isEmpty()) {
+			mod = "never";
+		} else {
+			long last = 0;
+			for (Post post : posts) {
+				if (post.getLastModification().getTime() > last) {
+					last = post.getLastModification().getTime();
+				}
+			}
+			mod = Long.toString(last);
+		}
+
+		head.put("amountOfPosts", Integer.toString(posts.size()));
+		head.put("lastModification", mod);
+		return ok(Json.toJson(head));
+	}
+
+	public static Result headPost(long id) {
+		try {
+			Post post = SimplePost.getPost(id);
+			Map<String, String> head = new HashMap<String, String>();
+
+			head.put("Content-Length", Integer.toString(post.getMsg().length()));
+			head.put("lastModification",
+					Long.toString(post.getLastModification().getTime()));
+			return ok(Json.toJson(head));
+		} catch (ResourceNotFoundException e) {
+			return notFound(e.getMessage());
+		}
+	}
+
+	public static Result headComment(long idPost, long idComment) {
+		try {
+			Map<String, String> head = new HashMap<String, String>();
+
+			Comment comment = SimplePost.getComment(idPost, idComment);
+			head.put("Content-Length",
+					Integer.toString(comment.getComment().length()));
+			head.put("lastModification",
+					Long.toString(comment.getLastModification().getTime()));
+			return ok(Json.toJson(head));
+		} catch (ResourceNotFoundException e) {
+			return notFound(e.getMessage());
+		}
+	}
+
+	public static Result headComments(long id) {
+		try {
+			Post post = SimplePost.getPost(id);
+			Map<String, String> head = new HashMap<String, String>();
+
+			head.put("Content-Length", Integer.toString(post.getMsg().length()));
+			head.put("lastModification",
+					Long.toString(post.getLastModification().getTime()));
+			return ok(Json.toJson(head));
+		} catch (ResourceNotFoundException e) {
+			return notFound(e.getMessage());
+		}
 	}
 }

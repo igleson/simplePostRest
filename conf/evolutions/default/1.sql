@@ -8,12 +8,14 @@ create table comment (
   post_id                   bigint not null,
   comment                   varchar(255) not null,
   num                       integer not null,
+  last_modification         timestamp,
   constraint pk_comment primary key (id))
 ;
 
 create table post (
   id                        bigint not null,
   msg                       varchar(255) not null,
+  last_modification         timestamp,
   next_num_comment          integer,
   constraint pk_post primary key (id))
 ;
