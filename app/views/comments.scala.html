@@ -1,0 +1,14 @@
+@(comments: List[Comment])
+
+@import helper._
+
+@main("Comments") {
+	
+	<ul>
+        @for(comment <- comments) {
+            <li>
+				@comment.getComment()
+            </li>
+        }
+    </ul>
+}

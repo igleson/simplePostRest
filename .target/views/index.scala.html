@@ -1,7 +1,45 @@
-@(message: String)
+@import helper._
 
-@main("Welcome to Play") {
+@main("Comments") {
 
-    @play20.welcome(message, style = "Java")
+	<script type="text/javascript">
+		function setPostLink(){
+			post = document.getElementById('postInput').value
+			if(post == ''){
+				document.getElementById('postLink').href = '/post'
+			}else{
+				document.getElementById('postLink').href = '/post/' + post
+			}
+		}
 
+		function setCommentLink(){
+			post = document.getElementById('postInput').value
+			comment = document.getElementById('commentInput').value
+			if(post == ''){
+				document.getElementById('postComment').href = ''
+			}else if(comment == ''){
+				document.getElementById('postComment').href = '/post/' + post + '/comment'
+			}else{
+				document.getElementById('postComment').href = '/post/' + post + '/comment/' + comment
+			}
+		}
+
+
+	</script>
+	
+	
+	<label for="postInput">Post number:</label>
+	<input type="text" id="postInput"/>
+	
+	<p>
+		<a id="postLink" href='' onclick="setPostLink()">posts</a>
+	</p>
+	
+	<label for="commentInput">Comment number:</label>
+	<input type="text" id="commentInput"/>
+	
+	<p>
+		<a id="postComment" href='' onclick="setCommentLink()">comments</a>
+	</p>
+		
 }

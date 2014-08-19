@@ -13,6 +13,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import play.db.ebean.Model;
 
 @Entity
@@ -24,6 +26,7 @@ public class Post extends Model {
 	private static final long serialVersionUID = -8719326480079151339L;
 
 	@OneToMany(cascade = CascadeType.PERSIST)
+	@JsonIgnore
 	private List<Comment> comments = new ArrayList<Comment>();
 
 	@Id
@@ -63,6 +66,7 @@ public class Post extends Model {
 		this.id = id;
 	}
 
+	@JsonIgnore
 	public List<Comment> getComents() {
 		return Collections.unmodifiableList(this.comments);
 	}
@@ -71,6 +75,7 @@ public class Post extends Model {
 		lastModification = new Date();
 	}
 
+	@SuppressWarnings("unused")
 	private void setComments(List<Comment> coments) {
 		this.comments = coments;
 	}

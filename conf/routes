@@ -2,7 +2,9 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET		/									controllers.Application.index
+GET		/										controllers.Application.index
+
+GET		/app									controllers.Application.app
 
 #Posts collection
 GET		/post									controllers.Application.allPosts

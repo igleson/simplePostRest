@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Collection;
+import java.util.List;
 
 public class SimplePost {
 
@@ -10,11 +11,11 @@ public class SimplePost {
 		return post;
 	}
 
-	public static Collection<Post> allPost() {
+	public static List<Post> allPost() {
 		return Post.find.all();
 	}
 
-	public static Collection<Comment> comentsFrom(long idPost) {
+	public static List<Comment> comentsFrom(long idPost) {
 		return getPost(idPost).getComents();
 	}
 

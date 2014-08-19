@@ -1,0 +1,14 @@
+@(posts: List[Post])
+
+@import helper._
+
+@main("Posts") {
+	
+	<ul>
+        @for(post <- posts) {
+            <li>
+				@post.getMsg()
+            </li>
+        }
+    </ul>
+}
