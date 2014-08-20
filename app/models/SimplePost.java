@@ -11,8 +11,9 @@ public class SimplePost {
 		return post;
 	}
 
-	public static List<Post> allPost() {
-		return Post.find.all();
+	public static List<Post> posts(int initial, int _final) {
+		return Post.find.where().setOrderBy("creation DESC").setFirstRow(initial-1)
+				.setMaxRows(_final - initial).findList();
 	}
 
 	public static List<Comment> comentsFrom(long idPost) {

@@ -1,20 +1,13 @@
 @main("Forum") {
-	<script type="text/javascript">
-	function getPosts() {
-		$("#posts").empty();
-		$("#refresh").after("<span id=" + '"loading"' + ">loading...</spam>")
-		$.getJSON('/post', function(json) {
-			$("#posts li").empty();
-			for(var i = json.length-1; i >= 0; i--){
-				$("#posts").prepend("<li>" + json[i].msg + "</li>");
-			}
-			$("#loading").fadeOut();
-		});
-	}
-	</script>
 	
 	<span id="title"> Posts: </span>
-	<button id="refresh" type="button" onclick="getPosts()">Refresh</button>
+	<button id="last" type="button" onclick="lastPosts(lastPost-10)">Last Posts</button>
+	<button id="next" type="button" onclick="nextPosts(lastPost+10)">Next Posts</button>
 	
-	<ul id=posts></ul>
+	<button id="update" type="button" onclick="update()">Update</button>
+	
+	<span id="loading" hidden="true"> loading... </span>
+	
+	<ul id="posts"></ul>
+
 }

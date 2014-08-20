@@ -16,6 +16,7 @@ create table post (
   id                        bigint not null,
   msg                       varchar(255) not null,
   last_modification         timestamp,
+  creation                  timestamp,
   next_num_comment          integer,
   constraint pk_post primary key (id))
 ;

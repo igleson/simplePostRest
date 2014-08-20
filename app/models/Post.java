@@ -1,21 +1,22 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import play.db.ebean.Model;
+
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Post extends Model {
@@ -25,8 +26,8 @@ public class Post extends Model {
 	 */
 	private static final long serialVersionUID = -8719326480079151339L;
 
-	@OneToMany(cascade = CascadeType.PERSIST)
 	@JsonIgnore
+	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<Comment> comments = new ArrayList<Comment>();
 
 	@Id
@@ -36,6 +37,9 @@ public class Post extends Model {
 	private String msg;
 
 	private Date lastModification;
+
+	private Calendar creation;
+	
 
 	private int nextNumComment;
 
@@ -75,6 +79,14 @@ public class Post extends Model {
 		lastModification = new Date();
 	}
 
+	public Calendar getCreation() {
+		return creation;
+	}
+	
+	public void setCreation(Calendar creation) {
+		this.creation = creation;
+	}
+
 	@SuppressWarnings("unused")
 	private void setComments(List<Comment> coments) {
 		this.comments = coments;
@@ -85,9 +97,14 @@ public class Post extends Model {
 		comment.setNum(nextNumComment);
 		nextNumComment++;
 	}
+	
+	public int getAmountComments(){
+		return comments.size();
+	}
 
 	@Override
 	public void save() {
+		this.setCreation(new GregorianCalendar());
 		preUpdate();
 		super.save();
 	}

@@ -7,7 +7,7 @@ GET		/										controllers.Application.index
 GET		/app									controllers.Application.app
 
 #Posts collection
-GET		/post									controllers.Application.allPosts
+GET		/post									controllers.Application.posts(initial:Int ?= 1, _final:Int ?= 10)
 POST	/post									controllers.Application.createPost
 HEAD	/post									controllers.Application.headPosts
 

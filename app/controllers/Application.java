@@ -15,7 +15,6 @@ import models.SimplePost;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import akka.dispatch.Foreach;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -56,13 +55,15 @@ public class Application extends Controller {
 		}
 	}
 
-	public static Result allPosts() {
+	public static Result posts(int initial, int _final) {
+		System.out.println(initial);
+		System.out.println(_final);
 		if (choosenAcceptType().toLowerCase().contains(HTML)) {
-			return ok(views.html.post.render(SimplePost.allPost()));
+			return ok(views.html.post.render(SimplePost.posts(initial, _final)));
 		} else if (choosenAcceptType().toLowerCase().contains(JSON)) {
-			return ok(allPostsJson());
+			return ok(allPostsJson(initial, _final));
 		} else {
-			return ok(allPostsJson().toString());
+			return ok(allPostsJson(initial, _final).toString());
 		}
 	}
 
@@ -121,8 +122,8 @@ public class Application extends Controller {
 		}
 	}
 
-	private static JsonNode allPostsJson() {
-		return Json.toJson(SimplePost.allPost());
+	private static JsonNode allPostsJson(int initial, int _final) {
+		return Json.toJson(SimplePost.posts(initial, _final));
 	}
 
 	public static Result createPost() {
@@ -241,7 +242,7 @@ public class Application extends Controller {
 
 	public static Result headPosts() {
 
-		Collection<Post> posts = SimplePost.allPost();
+		Collection<Post> posts = SimplePost.posts(1, 10);
 		String mod = "";
 		if (posts.isEmpty()) {
 			mod = "never";
@@ -256,7 +257,7 @@ public class Application extends Controller {
 		}
 
 		Controller.response().setHeader("Content-Length",
-				Integer.toString(allPostsJson().toString().getBytes().length));
+				Integer.toString(allPostsJson(1, 10).toString().getBytes().length));
 		Controller.response().setHeader("Last-Modified", mod);
 		return ok();
 	}
