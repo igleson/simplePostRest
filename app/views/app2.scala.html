@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Forum</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
+				type="text/javascript"></script>
+		<script src="@routes.Assets.at("javascripts/singlePageAngular.js")"
+				type="text/javascript"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+    </head>
+    <body ng-app="">
+    
+    	<div ng-controller="ForumController">
+    		
+    		<span id="title"> Posts: </span>
+			<button id="last" type="button" ng-click="lastPage()" ng-show="data.page > 1">Last Posts</button>
+			<button id="next" type="button" ng-click="nextPage()">Next Posts</button>
+    		
+    		<ul ng-repeat="post in data.posts">
+    			<li> {{post.text}}:
+    				<a href="" ng-click="getComments($index)"> {{post.qtdeComments}} </a>
+    				<ul ng-repeat="comment in post.comments" ng-show="post.showingComments">
+    					<li>
+    						{{comment.comment}}
+    					</li>
+    				</ul>
+					<button ng-show="post.showingComments" ng-click="hideCommments($index)"> hide </button>
+					<button ng-show="post.showingComments" ng-click="refreshComments($index)"> refresh </button>
+    			</li>
+    		</ul>
+    	</div>
+    
+    </body>
+</html>

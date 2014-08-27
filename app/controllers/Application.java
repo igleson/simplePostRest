@@ -32,6 +32,10 @@ public class Application extends Controller {
 	public static Result app() {
 		return ok(views.html.app.render());
 	}
+	
+	public static Result app2() {
+		return ok(views.html.app2.render());
+	}
 
 	public static Result index() {
 		if (choosenAcceptType().toLowerCase().contains(HTML)) {

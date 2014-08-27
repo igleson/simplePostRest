@@ -1,4 +1,4 @@
-var lastPost = -10
+var lastPost = -9
 function getPosts(initial) {
 	$("#loading").show()
 	$.getJSON('/post?initial=' + initial + '&_final=' + (initial + 10),
@@ -96,7 +96,9 @@ function getComments(id) {
 function nextPosts(initial) {
 	getPosts(initial)
 	lastPost = initial
-	$("#last").show()
+	if(lastPost > 1){
+		$("#last").show()
+	}
 }
 
 function lastPosts(initial) {

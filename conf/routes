@@ -5,6 +5,7 @@
 GET		/										controllers.Application.index
 
 GET		/app									controllers.Application.app
+GET		/app2									controllers.Application.app2
 
 #Posts collection
 GET		/post									controllers.Application.posts(initial:Int ?= 1, _final:Int ?= 10)
