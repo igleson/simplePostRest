@@ -26,6 +26,11 @@ function ForumController($scope) {
 			$scope.$apply()
 		});
 	}
+	
+	$scope.update = function() {
+		$scope.data.page = $scope.data.page - 1
+		$scope.nextPage()
+	}
 
 	$scope.getComments = function(index) {
 		if($scope.data.posts[index].comments.length > 0){
