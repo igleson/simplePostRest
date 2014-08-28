@@ -21,16 +21,18 @@
     		
     		<ul ng-repeat="post in data.posts">
     			<li class="post"> {{post.text}}
-				<br>
-				<a href="" ng-click="getComments($index)" ng-show="post.qtdeComments"> {{post.qtdeComments}} comments</a>
-				<ul ng-repeat="comment in post.comments" ng-show="post.showingComments" class="comment">
-					<li>
-						{{comment.comment}}
-					</li>
-				</ul>
+				<span class="commentArea">
+					<br>
+	    				<a href="" ng-click="getComments($index)" ng-show="post.qtdeComments"> {{post.qtdeComments}} comments</a>
+	    				<ul ng-repeat="comment in post.comments" ng-show="post.showingComments" class="comment">
+	    					<li>
+	    						{{comment.comment}}
+	    					</li>
+	    				</ul>
 
-				<button ng-show="post.showingComments" ng-click="hideCommments($index)"> hide </button>
-				<button ng-show="post.showingComments" ng-click="refreshComments($index)"> refresh </button>
+					<button ng-show="post.showingComments" ng-click="hideCommments($index)"> hide </button>
+					<button ng-show="post.showingComments" ng-click="refreshComments($index)"> refresh </button>
+				</span>
     			</li>
     		</ul>
     	</div>

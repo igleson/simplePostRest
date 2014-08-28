@@ -31,7 +31,10 @@ button {
     margin-bottom: 1em;
     border-radius:8px;
     border:0px solid;
-    box-shadow:3px 3px 3px #bbb;s
+    box-shadow:3px 3px 3px #bbb;
+
+
     color: black;
+
     background-color: #87CEEB;
 }

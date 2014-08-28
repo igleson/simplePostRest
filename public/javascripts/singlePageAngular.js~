@@ -69,6 +69,7 @@ function ForumController($scope, $http) {
 	}
 
 	addPost = function(post) {
+		alert(post.id)
 		$scope.data.posts.push({
 			"id" : post.id,
 			"text" : post.msg,
