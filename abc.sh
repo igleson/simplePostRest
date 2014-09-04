@@ -1,3 +1,4 @@
+
 C=0
 while [ $C -lt 50 ]; do
 	curl -X POST -d msg="teste"$C http://54.68.22.186:9000/post
