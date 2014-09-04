@@ -2,11 +2,14 @@ package controllers;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import models.Comment;
 import models.Post;
@@ -32,7 +35,7 @@ public class Application extends Controller {
 	public static Result app() {
 		return ok(views.html.app.render());
 	}
-	
+
 	public static Result app2() {
 		return ok(views.html.app2.render());
 	}
@@ -135,7 +138,16 @@ public class Application extends Controller {
 				.asFormUrlEncoded();
 		List<Post> createds = new ArrayList<Post>();
 
-		String[] msgs = params.get("msg");
+		List<String> msgs = null;
+
+		if (params == null) {
+			msgs = Controller.request().body().asJson().findValues("msg")
+					.stream().map((JsonNode j) -> j.asText())
+					.collect(Collectors.toList());
+		} else {
+			msgs = Arrays.stream(params.get("msg"))
+					.collect(Collectors.toList());
+		}
 		if (msgs != null) {
 			for (String msg : msgs) {
 				createds.add(SimplePost.createPost(msg));
@@ -260,8 +272,11 @@ public class Application extends Controller {
 			mod = formatDate(last);
 		}
 
-		Controller.response().setHeader("Content-Length",
-				Integer.toString(allPostsJson(1, 10).toString().getBytes().length));
+		Controller.response()
+				.setHeader(
+						"Content-Length",
+						Integer.toString(allPostsJson(1, 10).toString()
+								.getBytes().length));
 		Controller.response().setHeader("Last-Modified", mod);
 		return ok();
 	}

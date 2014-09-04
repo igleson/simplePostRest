@@ -13,11 +13,18 @@
     <body ng-app="">
     
     	<div ng-controller="ForumController">
+
+    		<form>
+				<textarea rows="4" cols="50" ng-model="data.novoPost">
+				</textarea>
+				<button ng-click="newPost()">Post</button>
+			</form>
     		
     		<span id="title"> Posts: </span>
 			<button id="last" type="button" ng-click="lastPage()" ng-show="data.page > 1">Last Posts</button>
 			<button id="next" type="button" ng-click="nextPage()">Next Posts</button>
 			<button id="update" type="button" ng-click="update()">Update</button>
+    		
     		
     		<ul ng-repeat="post in data.posts">
     			<li class="post"> {{post.text}}

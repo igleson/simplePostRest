@@ -61,6 +61,17 @@ function ForumController($scope, $http) {
 	$scope.hideCommments = function(index){
 		$scope.data.posts[index].showingComments = false;
 	}
+	
+	$scope.newPost = function(){
+		url = "/post"
+		newPostPromisse = $http.post(url, "msg" + $scope.data.novoPost)
+		newPostPromisse = newPostPromisse.success(function(data){
+			alert(data)
+			$scope.data.novoPost = ""
+		}).error(function(data){
+			alert(data)
+		});
+	}
 
 	function updatePosts(data){
 		for(var i = 0; i < data.length; i++){
