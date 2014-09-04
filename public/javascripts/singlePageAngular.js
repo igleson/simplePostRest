@@ -64,7 +64,7 @@ function ForumController($scope, $http) {
 	
 	$scope.newPost = function(){
 		url = "/post"
-		newPostPromisse = $http.post(url, "msg" + $scope.data.novoPost)
+		newPostPromisse = $http.post(url, msg : $scope.data.novoPost)
 		newPostPromisse = newPostPromisse.success(function(data){
 			alert(data)
 			$scope.data.novoPost = ""
