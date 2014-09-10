@@ -11,9 +11,6 @@ import play.db.ebean.Model;
 @Entity
 public class Comment extends Model {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public static final Finder<Long, Comment> find = new Finder<Long, Comment>(

@@ -216,8 +216,17 @@ public class Application extends Controller {
 		Map<String, String[]> params = Controller.request().body()
 				.asFormUrlEncoded();
 
-		String[] comms = params.get("comment");
+		List<String> comms = null;
 		List<Comment> createds = new ArrayList<Comment>();
+
+        if (params == null) {
+            comms = Controller.request().body().asJson().findValues("comment")
+                    .stream().map((JsonNode j) -> j.asText())
+                    .collect(Collectors.toList());
+        } else {
+            comms = Arrays.stream(params.get("comment"))
+                    .collect(Collectors.toList());
+        }
 		if (comms != null) {
 			try {
 				for (String msg : comms) {
@@ -227,7 +236,7 @@ public class Application extends Controller {
 				return notFound(e.getMessage());
 			}
 		}
-		return ok();
+		return ok(Json.toJson(createds));
 	}
 
 	public static Result editComment(long idPost, long idComment) {
